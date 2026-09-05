@@ -1,5 +1,6 @@
 import express from 'express';
 import { createDb } from './db.js';
+import { cors } from './middleware/cors.js';
 import { requireAuth } from './middleware/auth.js';
 import { authRouter } from './routes/auth.js';
 import { tasksRouter } from './routes/tasks.js';
@@ -7,6 +8,7 @@ import { tasksRouter } from './routes/tasks.js';
 export function createApp({ dbPath = 'data.sqlite', jwtSecret = process.env.JWT_SECRET || 'dev-secret' } = {}) {
   const db = createDb(dbPath);
   const app = express();
+  app.use(cors());
   app.use(express.json());
 
   app.get('/health', (req, res) => res.json({ status: 'ok' }));
