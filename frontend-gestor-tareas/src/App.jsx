@@ -71,10 +71,16 @@ export function App() {
 
   async function toggleTask(task) {
     setError('');
+    // BUG-008: se actualiza la interfaz de inmediato y se revierte si la API
+    // falla. Antes el checkbox no se movia hasta que respondia el servidor, y
+    // en una red lenta el usuario creia que su click se habia ignorado.
+    const previas = tasks;
+    setTasks(tasks.map((t) => (t.id === task.id ? { ...t, done: !t.done } : t)));
     try {
       const updated = await api.updateTask(token, task.id, { done: !task.done });
-      setTasks(tasks.map((t) => (t.id === updated.id ? updated : t)));
+      setTasks((actuales) => actuales.map((t) => (t.id === updated.id ? updated : t)));
     } catch (err) {
+      setTasks(previas);
       handleAuthError(err);
     }
   }
