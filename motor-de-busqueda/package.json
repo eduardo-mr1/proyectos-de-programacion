@@ -1,0 +1,13 @@
+{
+  "name": "motor-de-busqueda",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Motor de busqueda de texto completo con indice invertido y ranking BM25",
+  "main": "src/search-engine.js",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "bench": "node bench/benchmark.js",
+    "search": "node src/cli.js"
+  },
+  "license": "MIT"
+}

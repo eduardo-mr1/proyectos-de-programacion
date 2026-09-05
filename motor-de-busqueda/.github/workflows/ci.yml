@@ -1,0 +1,22 @@
+name: CI Motor de Busqueda
+
+on:
+  push:
+    paths:
+      - 'motor-de-busqueda/**'
+  pull_request:
+    paths:
+      - 'motor-de-busqueda/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: motor-de-busqueda
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
