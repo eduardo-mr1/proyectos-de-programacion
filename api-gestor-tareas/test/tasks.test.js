@@ -24,10 +24,11 @@ test('crear y listar una tarea', async () => {
     assert.equal(create.status, 201);
 
     const list = await fetch(`${base()}/tasks`, { headers: { Authorization: `Bearer ${token}` } });
-    const tasks = await list.json();
+    const { tasks, total } = await list.json();
     assert.equal(tasks.length, 1);
+    assert.equal(total, 1);
     assert.equal(tasks[0].title, 'Escribir pruebas');
-    assert.equal(tasks[0].done, 0);
+    assert.equal(tasks[0].done, false);
   } finally {
     server.close();
   }
@@ -46,7 +47,7 @@ test('un usuario no puede ver tareas de otro usuario', async () => {
     });
 
     const listB = await fetch(`${base()}/tasks`, { headers: { Authorization: `Bearer ${tokenB}` } });
-    const tasksB = await listB.json();
+    const { tasks: tasksB } = await listB.json();
     assert.equal(tasksB.length, 0);
   } finally {
     server.close();
@@ -70,7 +71,7 @@ test('marcar tarea como completada', async () => {
       body: JSON.stringify({ done: true }),
     });
     const updated = await update.json();
-    assert.equal(updated.done, 1);
+    assert.equal(updated.done, true);
   } finally {
     server.close();
   }
