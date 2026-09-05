@@ -102,6 +102,7 @@ button.link {
 }
 
 button.delete {
+  flex-shrink: 0;
   padding: 4px 10px;
   font-size: 0.8rem;
   color: var(--danger);
@@ -116,6 +117,7 @@ button.delete {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  min-width: 0;
   padding: 12px 16px;
   background: var(--card);
   border: 1px solid var(--border);
@@ -126,6 +128,9 @@ button.delete {
   display: flex;
   align-items: center;
   gap: 10px;
+  /* BUG-003: sin esto un titulo largo sin espacios estira la pagina entera. */
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--text);
   font-size: 1rem;
   cursor: pointer;
