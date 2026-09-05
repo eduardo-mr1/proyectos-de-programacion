@@ -6,7 +6,10 @@ export function createDb(path = 'data.sqlite') {
   db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      email TEXT UNIQUE NOT NULL,
+      -- BUG-001: NOCASE hace que la restriccion UNIQUE tambien ignore
+      -- mayusculas, como segunda linea de defensa detras de la
+      -- normalizacion que hace la capa de rutas.
+      email TEXT UNIQUE NOT NULL COLLATE NOCASE,
       password_hash TEXT NOT NULL,
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );

@@ -33,7 +33,9 @@ async function request(path, { method = 'GET', body, token } = {}) {
 export const api = {
   register: (email, password) => request('/auth/register', { method: 'POST', body: { email, password } }),
   login: (email, password) => request('/auth/login', { method: 'POST', body: { email, password } }),
-  listTasks: (token) => request('/tasks', { token }),
+  // La API devuelve { tasks, total, limit, offset }; aqui solo se usa la
+  // primera pagina, con el tope por defecto del servidor.
+  listTasks: (token) => request('/tasks', { token }).then((r) => r.tasks),
   createTask: (token, title) => request('/tasks', { method: 'POST', body: { title }, token }),
   updateTask: (token, id, changes) => request(`/tasks/${id}`, { method: 'PATCH', body: changes, token }),
   deleteTask: (token, id) => request(`/tasks/${id}`, { method: 'DELETE', token }),
