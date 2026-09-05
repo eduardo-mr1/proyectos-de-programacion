@@ -54,7 +54,7 @@ test('indexar dos veces el mismo id lanza error', () => {
 
 test('calcula el largo promedio de documento', () => {
   const index = new InvertedIndex();
-  index.add('d1', 'uno dos');        // 2 tokens
-  index.add('d2', 'uno dos tres cuatro'); // 4 tokens
+  index.add('d1', 'indice busqueda');                  // 2 tokens
+  index.add('d2', 'indice busqueda ranking relevancia'); // 4 tokens
   assert.equal(index.averageDocLength, 3);
 });
